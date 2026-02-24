@@ -27,7 +27,7 @@ This repository provides structured workflows and diagnostic tools for AI coding
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/rds-mysql-performance-skills.git
+git clone https://github.com/veerendranayak/rds-mysql-performance-skills.git
 cd rds-mysql-performance-skills
 
 # Install dependencies
@@ -43,7 +43,7 @@ cp config.example.json config.json
 #### With skills.sh
 
 ```bash
-npx skills add YOUR-USERNAME/rds-mysql-performance-skills
+npx skills add veerendranayak/rds-mysql-performance-skills
 ```
 
 #### Manual Usage

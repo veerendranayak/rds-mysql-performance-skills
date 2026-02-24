@@ -13,7 +13,7 @@ Get started with RDS MySQL Performance Skills in 5 minutes.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/rds-mysql-performance-skills.git
+git clone https://github.com/veerendranayak/rds-mysql-performance-skills.git
 cd rds-mysql-performance-skills
 
 # Install Python dependencies
