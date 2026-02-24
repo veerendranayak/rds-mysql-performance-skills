@@ -1,0 +1,19 @@
+{
+  "database": {
+    "host": "mydb.xxxxxxxx.us-east-1.rds.amazonaws.com",
+    "port": 3306,
+    "user": "admin",
+    "password": "YOUR_PASSWORD_HERE",
+    "database": "information_schema"
+  },
+  "aws": {
+    "region": "us-east-1",
+    "db_instance_identifier": "mydb"
+  },
+  "analysis": {
+    "slow_query_threshold_seconds": 1.0,
+    "connection_utilization_warning_pct": 80,
+    "buffer_pool_hit_rate_warning_pct": 99,
+    "cpu_utilization_warning_pct": 70
+  }
+}
