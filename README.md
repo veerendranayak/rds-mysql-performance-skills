@@ -1,17 +1,20 @@
-# RDS MySQL Performance Skills
+# AWS MySQL Performance Skills
 
-AI-powered performance review and optimization skills for Amazon RDS MySQL instances.
+AI-powered performance review and optimization skills for Amazon RDS MySQL and Aurora MySQL.
 
 ## Overview
 
-This repository provides structured workflows and diagnostic tools for AI coding assistants to analyze and optimize RDS MySQL database performance. Inspired by [PlanetScale's database-skills](https://github.com/planetscale/database-skills), these skills are specifically adapted for AWS RDS MySQL environments.
+This repository provides structured workflows and diagnostic tools for AI coding assistants to analyze and optimize AWS RDS and Aurora MySQL database performance. These skills are specifically designed for AWS database environments with comprehensive coverage of RDS MySQL and Aurora MySQL specific features and optimizations.
 
 ## Features
 
-- **Performance Diagnostics**: Automated collection and analysis of RDS metrics, slow queries, and database health
+- **Dual Skill Coverage**: Separate skills for RDS MySQL and Aurora MySQL with platform-specific guidance
+- **Performance Diagnostics**: Automated collection and analysis of CloudWatch metrics, slow queries, and database health
 - **Schema Review**: Evidence-based schema design validation following MySQL/InnoDB best practices
-- **Query Optimization**: EXPLAIN analysis, index recommendations, and query pattern improvements
-- **RDS-Specific Guidance**: CloudWatch integration, parameter group optimization, and RDS operational best practices
+- **Query Optimization**: EXPLAIN analysis, index recommendations, query pattern analysis, and anti-pattern detection
+- **Aurora-Specific Guidance**: TempTable overflow prevention, fast failover with RDS Proxy, parallel query optimization
+- **RDS-Specific Guidance**: CloudWatch integration, parameter group optimization, storage configuration
+- **MySQL 8.4 Migration**: Comprehensive breaking changes guide for upgrading to MySQL 8.4 / Aurora MySQL 4.x
 - **Automated Reports**: Generate comprehensive performance review reports with actionable recommendations
 
 ## Quick Start
@@ -48,7 +51,19 @@ npx skills add veerendranayak/rds-mysql-performance-skills
 
 #### Manual Usage
 
-Reference the `skills/rds-mysql/SKILL.md` file in your AI assistant conversations to guide performance reviews.
+Reference the appropriate skill file in your AI assistant conversations:
+
+**For RDS MySQL**:
+```
+Review my RDS MySQL performance using the guidance in:
+https://github.com/veerendranayak/rds-mysql-performance-skills/blob/master/skills/rds-mysql/SKILL.md
+```
+
+**For Aurora MySQL**:
+```
+Review my Aurora MySQL cluster using the guidance in:
+https://github.com/veerendranayak/rds-mysql-performance-skills/blob/master/skills/aurora-mysql/SKILL.md
+```
 
 ### Standalone Diagnostic Tool
 
@@ -62,23 +77,32 @@ python scripts/generate_report.py --output report.html
 
 ## Skill Structure
 
+### RDS MySQL Skill
 ```
 skills/rds-mysql/
-├── SKILL.md                    # Main skill instructions for AI assistants
+├── SKILL.md                    # RDS MySQL performance review workflow
 └── references/
     ├── rds-best-practices.md   # RDS-specific operational guidance
     ├── query-optimization.md   # Query tuning patterns
     └── cloudwatch-metrics.md   # Key metrics to monitor
 ```
 
+### Aurora MySQL Skill
+```
+skills/aurora-mysql/
+├── SKILL.md                    # Aurora MySQL performance review workflow
+└── references/
+    ├── aurora-specifics.md     # Aurora architecture, TempTable, failover
+    ├── mysql-84-changes.md     # MySQL 8.4 breaking changes
+    └── query-patterns.md       # Common anti-patterns and fixes
+```
+
 ## What's Included
 
 ### Diagnostic Scripts
 
-- `rds_performance_diagnostic.py`: Collects performance metrics, slow queries, and database statistics
-- `schema_analyzer.py`: Reviews table structures, indexes, and foreign keys
-- `query_analyzer.py`: Analyzes slow query logs and generates EXPLAIN plans
-- `generate_report.py`: Creates HTML performance reports with visualizations
+- `rds_performance_diagnostic.py`: Collects performance metrics, slow queries, and database statistics (works for both RDS and Aurora)
+- `query_analyzer.py`: Analyzes queries with EXPLAIN and provides optimization recommendations
 
 ### Key Capabilities
 
@@ -105,15 +129,42 @@ skills/rds-mysql/
    - Read replica optimization
    - Backup and maintenance window review
 
-## RDS-Specific Considerations
+## RDS vs Aurora: When to Use Each Skill
 
-This skill accounts for RDS limitations and features:
+### Use the RDS MySQL Skill When:
+- Running standard RDS MySQL instances
+- Need IOPS and storage provisioning guidance
+- Working with EBS-backed storage (gp2, gp3, io1, io2)
+- Have 5 or fewer read replicas
+- Using Multi-AZ for high availability
 
-- Uses CloudWatch for system metrics (no direct host access)
-- Respects RDS parameter group constraints
-- Considers RDS storage types (gp2, gp3, io1, io2)
-- Accounts for Multi-AZ and read replica configurations
-- Adapts recommendations for RDS engine versions
+### Use the Aurora MySQL Skill When:
+- Running Aurora MySQL clusters
+- Need guidance on TempTable overflow prevention (critical for Aurora readers)
+- Working with Aurora's shared storage architecture
+- Have up to 15 read replicas
+- Using RDS Proxy for fast failover
+- Planning to use Aurora Parallel Query
+- Migrating to MySQL 8.4 / Aurora MySQL 4.x
+
+### Key Aurora Differences
+
+**TempTable Behavior (CRITICAL)**:
+- Aurora readers **fail queries** on TempTable overflow
+- RDS MySQL spills to disk (slower but doesn't fail)
+- Requires special attention to query routing and TempTable sizing
+
+**Replication**:
+- Aurora: Sub-10ms replica lag typical, up to 15 replicas
+- RDS: 30s-300s lag typical, up to 5 replicas
+
+**Failover**:
+- Aurora: 30-60s typical, sub-5s with RDS Proxy
+- RDS Multi-AZ: 60-120s typical
+
+**Storage**:
+- Aurora: Shared, distributed, auto-scaling to 128TB
+- RDS: EBS volumes, manual provisioning
 
 ## Example Workflow
 
@@ -133,7 +184,7 @@ MIT License - See LICENSE file for details
 
 ## Acknowledgments
 
-Inspired by [PlanetScale's database-skills](https://github.com/planetscale/database-skills) project.
+Built to address the growing need for automated database performance review and optimization in AWS environments, helping teams scale their database operations without proportionally scaling DBA headcount.
 
 ## Related Resources
 
