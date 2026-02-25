@@ -1,6 +1,6 @@
 # AWS MySQL Performance Skills
 
-AI-powered performance review and optimization skills for Amazon RDS MySQL and Aurora MySQL.
+AI-powered performance review and optimization skills for Amazon RDS MySQL and Aurora MySQL, with MCP server for seamless AI assistant integration.
 
 ## Overview
 
@@ -28,6 +28,41 @@ This repository provides structured workflows and diagnostic tools for AI coding
 
 ### Installation
 
+#### Option 1: MCP Server (Recommended for AI Assistants)
+
+The MCP (Model Context Protocol) server provides seamless integration with AI assistants like Claude Desktop:
+
+```bash
+# Install via uvx (recommended)
+uvx veerendranayak.rds-mysql-mcp-server@latest
+
+# Or install via pip
+pip install veerendranayak.rds-mysql-mcp-server
+```
+
+**Configuration**: Add to your AI assistant's MCP configuration (e.g., Claude Desktop):
+
+```json
+{
+  "mcpServers": {
+    "rds-mysql-performance": {
+      "command": "uvx",
+      "args": ["veerendranayak.rds-mysql-mcp-server@latest"]
+    }
+  }
+}
+```
+
+See [MCP Server Documentation](./mcp-server/README.md) for detailed setup and usage.
+
+#### Option 2: Skills.sh
+
+```bash
+npx skills add veerendranayak/rds-mysql-performance-skills
+```
+
+#### Option 3: Standalone Scripts
+
 ```bash
 # Clone the repository
 git clone https://github.com/veerendranayak/rds-mysql-performance-skills.git
@@ -43,11 +78,15 @@ cp config.example.json config.json
 
 ### Usage with AI Assistants
 
-#### With skills.sh
+#### With MCP Server (Recommended)
 
-```bash
-npx skills add veerendranayak/rds-mysql-performance-skills
+Once configured, simply ask your AI assistant:
+
 ```
+Use the aurora_mysql_performance_review tool to help me optimize my Aurora cluster
+```
+
+The AI assistant will automatically invoke the appropriate tool and receive expert guidance.
 
 #### Manual Usage
 

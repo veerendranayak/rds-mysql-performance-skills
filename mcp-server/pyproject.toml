@@ -1,0 +1,55 @@
+[project]
+name = "veerendranayak.rds-mysql-mcp-server"
+version = "1.0.0"
+description = "MCP Server for AWS RDS MySQL and Aurora MySQL performance optimization"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "pydantic>=2.0.0",
+]
+license = {text = "MIT"}
+authors = [
+    {name = "Veerendra Nayak", email = "veerendranayak@users.noreply.github.com"},
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+homepage = "https://github.com/veerendranayak/rds-mysql-performance-skills"
+repository = "https://github.com/veerendranayak/rds-mysql-performance-skills"
+documentation = "https://github.com/veerendranayak/rds-mysql-performance-skills/blob/master/README.md"
+
+[project.scripts]
+"veerendranayak.rds-mysql-mcp-server" = "veerendranayak.rds_mysql_mcp_server.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["veerendranayak"]
+
+[tool.ruff]
+line-length = 99
+exclude = [
+    ".venv",
+    "**/__pycache__",
+    "**/dist",
+    "**/build",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
